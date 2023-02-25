@@ -144,3 +144,9 @@ dmypy.json
 .history/
 
 .mypy_cache
+
+# IDE
+.idea/
+
+# Static
+yatube/static
