@@ -8,30 +8,6 @@ from .forms import PostForm
 
 POSTS_LIMIT: int = 10
 
-from django.db import connection, reset_queries
-import time
-import functools
-
-
-def query_debugger(func):
-    @functools.wraps(func)
-    def inner_func(*args, **kwargs):
-        reset_queries()
-
-        start_queries = len(connection.queries)
-
-        start = time.perf_counter()
-        result = func(*args, **kwargs)
-        end = time.perf_counter()
-
-        end_queries = len(connection.queries)
-
-        print(f"Function : {func.__name__}")
-        print(f"Number of Queries : {end_queries - start_queries}")
-        print(f"Finished in : {(end - start):.2f}s")
-        return result
-
-    return inner_func
 
 def get_paginator(request, posts, posts_per_page):
     paginator = Paginator(posts, posts_per_page)
@@ -64,7 +40,7 @@ def group_posts(request, slug):
     }
     return render(request, 'posts/group_list.html', context)
 
-@query_debugger
+
 def profile(request, username):
     """Profile page."""
     user = get_object_or_404(User, username=username)
