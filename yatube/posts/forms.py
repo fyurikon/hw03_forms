@@ -15,7 +15,7 @@ similarity_threshhold: float = 0.8
 
 
 def join_punctuation(seq: List[str], characters: str = '.,;?!') -> str:
-    '''Combine words and charactes into string.'''
+    """Combine words and characters into string."""
     characters = set(characters)
     seq = iter(seq)
     current = next(seq)
@@ -31,7 +31,7 @@ def join_punctuation(seq: List[str], characters: str = '.,;?!') -> str:
 
 
 def lemmatize_words(tokenized_words: List[str]) -> List[str]:
-    '''Lemmatize words.'''
+    """Lemmatize words."""
     morph = pymorphy2.MorphAnalyzer()
 
     result = list()
@@ -44,7 +44,7 @@ def lemmatize_words(tokenized_words: List[str]) -> List[str]:
 
 
 def stemmatize_words(tokenized_words: List[str]) -> List[str]:
-    '''Stemmatize words.'''
+    """Stemmatize words."""
     snowball = SnowballStemmer("russian")
     result = [snowball.stem(word) for word in tokenized_words]
 
@@ -53,7 +53,7 @@ def stemmatize_words(tokenized_words: List[str]) -> List[str]:
 
 def bad_language_validation(text: str, stop_words: List[str],
                             similarity_threshold: float) -> Tuple[str, bool]:
-    '''Check if text contains bad words and replace it with asterisks.'''
+    """Check if text contains bad words and replace it with asterisks."""
     bad_words_idx: int = []
     validation_error: bool = False
     tokenized_words: List[str] = word_tokenize(text)

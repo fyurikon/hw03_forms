@@ -58,7 +58,7 @@ class Post(models.Model):
 
 class CensoredWord(models.Model):
     """
-    A list of prohibited word.
+    Prohibited words.
     """
     word = models.CharField('Запретное слово', max_length=50)
 
