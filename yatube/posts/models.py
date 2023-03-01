@@ -54,3 +54,17 @@ class Post(models.Model):
 
     def __str__(self):
         return self.text
+
+
+class CensoredWord(models.Model):
+    """
+    A list of prohibited word.
+    """
+    word = models.CharField('Запретное слово', max_length=50)
+
+    class Meta:
+        verbose_name = 'Слово'
+        verbose_name_plural = 'Слова'
+
+    def __str__(self):
+        return self.word
