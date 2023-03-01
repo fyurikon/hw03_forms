@@ -1,12 +1,10 @@
 <article>
   <ul>
     <li>
-      Автор:
-      {% if profile_page == True %}
-        {{ post.author.get_full_name }}
-      {% else %}
+      Автор: {{ post.author.get_full_name }}
+      {% if not profile_page %}
         <a href="{% url 'posts:profile' post.author.username %}">
-          {{ post.author.get_full_name }}
+          >>
         </a>
       {% endif %}
     </li>

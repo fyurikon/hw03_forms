@@ -9,13 +9,13 @@ class Group(models.Model):
     """
     Group model is responsible for the group.
     """
+    title = models.CharField('Заголовок', max_length=200)
+    slug = models.SlugField(unique=True)
+    description = models.TextField('Описание')
+
     class Meta:
         verbose_name = 'Группа'
         verbose_name_plural = 'Группы'
-
-    title = models.CharField(max_length=200, verbose_name='Заголовок')
-    slug = models.SlugField(unique=True)
-    description = models.TextField(verbose_name='Описание')
 
     def __str__(self):
         return self.title
@@ -25,16 +25,11 @@ class Post(models.Model):
     """
     Post model is responsible for the post.
     """
-
-    class Meta:
-        ordering = [PUB_DATE_DESC]
-        verbose_name = 'Публикация'
-        verbose_name_plural = 'Публикации'
-
-    text = models.TextField(verbose_name='Текст')
+    text = models.TextField('Текст')
     pub_date = models.DateTimeField(
-        auto_now_add=True,
-        verbose_name='Дата публикации')
+        'Дата публикации',
+        auto_now_add=True
+    )
 
     author = models.ForeignKey(
         User,
@@ -48,9 +43,14 @@ class Post(models.Model):
         on_delete=models.SET_NULL,
         blank=True,
         null=True,
-        related_name='posts',
+        related_name='posts_group',
         verbose_name='Группа'
     )
+
+    class Meta:
+        ordering = (PUB_DATE_DESC,)
+        verbose_name = 'Публикация'
+        verbose_name_plural = 'Публикации'
 
     def __str__(self):
         return self.text

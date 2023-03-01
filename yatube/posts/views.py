@@ -19,7 +19,7 @@ def get_paginator(request, posts, posts_per_page):
 
 def index(request):
     """Main page."""
-    posts = Post.objects.all()
+    posts = Post.objects.select_related('author', 'group').all()
     page_obj = get_paginator(request, posts, POSTS_LIMIT)
 
     context = {
@@ -31,7 +31,7 @@ def index(request):
 def group_posts(request, slug):
     """Group posts page."""
     group = get_object_or_404(Group, slug=slug)
-    posts = group.posts.all()
+    posts = group.posts_group.select_related('author').all()
     page_obj = get_paginator(request, posts, POSTS_LIMIT)
 
     context = {
@@ -44,7 +44,7 @@ def group_posts(request, slug):
 def profile(request, username):
     """Profile page."""
     user = get_object_or_404(User, username=username)
-    posts = Post.objects.select_related('author').filter(author=user)
+    posts = user.posts.select_related('group').all()
     page_obj = get_paginator(request, posts, POSTS_LIMIT)
 
     context = {
