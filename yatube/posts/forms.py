@@ -33,12 +33,7 @@ def join_punctuation(seq: List[str], characters: str = '.,;?!') -> str:
 def lemmatize_words(tokenized_words: List[str]) -> List[str]:
     """Lemmatize words."""
     morph = pymorphy2.MorphAnalyzer()
-
-    result = list()
-
-    for word in tokenized_words:
-        p = morph.parse(word)[0]
-        result.append(p.normal_form)
+    result = [morph.parse(word)[0].normal_form for word in tokenized_words]
 
     return result
 
