@@ -10,6 +10,7 @@ POSTS_LIMIT: int = 10
 
 
 def get_paginator(request, posts, posts_per_page):
+    """Get page_obj via paginator."""
     paginator = Paginator(posts, posts_per_page)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
@@ -56,7 +57,8 @@ def profile(request, username):
 
 def post_detail(request, post_id):
     """Single post page."""
-    post = get_object_or_404(Post, pk=post_id)
+    post = get_object_or_404(Post.objects.select_related('group', 'author'),
+                             pk=post_id)
 
     context = {
         'post': post,

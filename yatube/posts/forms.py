@@ -77,6 +77,7 @@ def bad_language_validation(text: str, stop_words: List[str],
         tokenized_words[i] = '*' * len(tokenized_words[i])
 
     result: str = ' '.join(join_punctuation(tokenized_words))
+
     return result, validation_error
 
 
@@ -88,11 +89,7 @@ class PostForm(forms.ModelForm):
 
     def clean_text(self):
         text: str = self.cleaned_data['text']
-        stop_words: List[str] = []
-        words = CensoredWord.objects.all()
-
-        for word in words:
-            stop_words.append(word.word)
+        stop_words = CensoredWord.objects.values_list('word', flat=True)
 
         data: Tuple[str, bool] = bad_language_validation(
             text,
