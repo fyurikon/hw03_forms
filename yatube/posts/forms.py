@@ -11,7 +11,7 @@ from .models import Post, CensoredWord
 
 nltk.download('punkt')
 
-similarity_threshhold: float = 0.8
+similarity_threshhold: float = 0.7
 
 
 def join_punctuation(seq: List[str], characters: str = '.,;?!') -> str:
