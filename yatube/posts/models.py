@@ -25,7 +25,10 @@ class Post(models.Model):
     """
     Post model is responsible for the post.
     """
-    text = models.TextField('Текст')
+    text = models.TextField(
+        'Текст',
+        help_text='Введите текст поста'
+    )
     pub_date = models.DateTimeField(
         'Дата публикации',
         auto_now_add=True
@@ -44,7 +47,8 @@ class Post(models.Model):
         blank=True,
         null=True,
         related_name='posts_group',
-        verbose_name='Группа'
+        verbose_name='Группа',
+        help_text='Группа, к которой будет относиться пост'
     )
 
     class Meta:
@@ -53,7 +57,7 @@ class Post(models.Model):
         verbose_name_plural = 'Публикации'
 
     def __str__(self):
-        return self.text
+        return self.text[:15]
 
 
 class CensoredWord(models.Model):
